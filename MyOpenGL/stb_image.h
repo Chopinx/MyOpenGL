@@ -15,7 +15,6 @@ before you include this file in *one* C or C++ file to create the implementation
 You can #define STBI_ASSERT(x) before the #include to avoid using assert.h.
 And #define STBI_MALLOC, STBI_REALLOC, and STBI_FREE to avoid using malloc,realloc,free
 
-
 QUICK NOTES:
 Primarily of interest to game developers and other people who can
 avoid problematic images and only need the trivial interface
@@ -41,7 +40,6 @@ http://gist.github.com/urraka/685d9a6340b26b830d49
 
 Full documentation under "DOCUMENTATION" below.
 
-
 LICENSE
 
 See end of file for license information.
@@ -61,7 +59,6 @@ correct channel count for PNG & BMP
 2.09  (2016-01-16) 16-bit TGA; comments in PNM files; STBI_REALLOC_SIZED
 
 See end of file for full revision history.
-
 
 ============================    Contributors    =========================
 
@@ -300,7 +297,6 @@ Christian Floisand      Kevin Schmidt                         github:poppolopopp
 //     want the zlib decoder to be available, #define STBI_SUPPORT_ZLIB
 //
 
-
 #ifndef STBI_NO_STDIO
 #include <stdio.h>
 #endif // STBI_NO_STDIO
@@ -405,7 +401,6 @@ extern "C" {
 	STBIDEF int      stbi_is_hdr_from_file(FILE *f);
 #endif // STBI_NO_STDIO
 
-
 	// get a VERY brief reason for failure
 	// NOT THREADSAFE
 	STBIDEF const char *stbi_failure_reason(void);
@@ -422,8 +417,6 @@ extern "C" {
 	STBIDEF int      stbi_info_from_file(FILE *f, int *x, int *y, int *comp);
 
 #endif
-
-
 
 	// for image formats that explicitly notate that they have premultiplied alpha,
 	// we just return the colors as stored in the file. set this flag to force
@@ -446,7 +439,6 @@ extern "C" {
 
 	STBIDEF char *stbi_zlib_decode_noheader_malloc(const char *buffer, int len, int *outlen);
 	STBIDEF int   stbi_zlib_decode_noheader_buffer(char *obuffer, int olen, const char *ibuffer, int ilen);
-
 
 #ifdef __cplusplus
 }
@@ -496,7 +488,6 @@ extern "C" {
 #define STBI_NO_ZLIB
 #endif
 
-
 #include <stdarg.h>
 #include <stddef.h> // ptrdiff_t on osx
 #include <stdlib.h>
@@ -516,7 +507,6 @@ extern "C" {
 #define STBI_ASSERT(x) assert(x)
 #endif
 
-
 #ifndef _MSC_VER
 #ifdef __cplusplus
 #define stbi_inline inline
@@ -526,7 +516,6 @@ extern "C" {
 #else
 #define stbi_inline __forceinline
 #endif
-
 
 #ifdef _MSC_VER
 typedef unsigned short stbi__uint16;
@@ -694,7 +683,6 @@ typedef struct
 	stbi_uc *img_buffer, *img_buffer_end;
 	stbi_uc *img_buffer_original, *img_buffer_original_end;
 } stbi__context;
-
 
 static void stbi__refill_buffer(stbi__context *s);
 
@@ -1127,7 +1115,6 @@ static FILE *stbi__fopen(char const *filename, char const *mode)
 	return f;
 }
 
-
 STBIDEF stbi_uc *stbi_load(char const *filename, int *x, int *y, int *comp, int req_comp)
 {
 	FILE *f = stbi__fopen(filename, "rb");
@@ -1173,7 +1160,6 @@ STBIDEF stbi_us *stbi_load_16(char const *filename, int *x, int *y, int *comp, i
 	fclose(f);
 	return result;
 }
-
 
 #endif //!STBI_NO_STDIO
 
@@ -1326,7 +1312,6 @@ static float stbi__h2l_gamma_i = 1.0f / 2.2f, stbi__h2l_scale_i = 1.0f;
 STBIDEF void   stbi_hdr_to_ldr_gamma(float gamma) { stbi__h2l_gamma_i = 1 / gamma; }
 STBIDEF void   stbi_hdr_to_ldr_scale(float scale) { stbi__h2l_scale_i = 1 / scale; }
 
-
 //////////////////////////////////////////////////////////////////////////////
 //
 // Common code used by all image loaders
@@ -1452,7 +1437,6 @@ static stbi__uint32 stbi__get32le(stbi__context *s)
 #endif
 
 #define STBI__BYTECAST(x)  ((stbi_uc) ((x) & 255))  // truncate int to byte without warnings
-
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -3812,7 +3796,7 @@ static int stbi__zbuild_huffman(stbi__zhuffman *z, const stbi_uc *sizelist, int 
 		++sizes[sizelist[i]];
 	sizes[0] = 0;
 	for (i = 1; i < 16; ++i)
-		if (sizes[i] >(1 << i))
+		if (sizes[i] > (1 << i))
 			return stbi__err("bad sizes", "Corrupt PNG");
 	code = 0;
 	for (i = 1; i < 16; ++i) {
@@ -4282,7 +4266,6 @@ typedef struct
 	stbi_uc *idata, *expanded, *out;
 	int depth;
 } stbi__png;
-
 
 enum {
 	STBI__F_none = 0,
@@ -4767,7 +4750,7 @@ static int stbi__parse_png_file(stbi__png *z, int scan, int req_comp)
 			if (color == 3) pal_img_n = 3; else if (color & 1) return stbi__err("bad ctype", "Corrupt PNG");
 			comp = stbi__get8(s);  if (comp) return stbi__err("bad comp method", "Corrupt PNG");
 			filter = stbi__get8(s);  if (filter) return stbi__err("bad filter method", "Corrupt PNG");
-			interlace = stbi__get8(s); if (interlace>1) return stbi__err("bad interlace method", "Corrupt PNG");
+			interlace = stbi__get8(s); if (interlace > 1) return stbi__err("bad interlace method", "Corrupt PNG");
 			if (!s->img_x || !s->img_y) return stbi__err("0-pixel image", "Corrupt PNG");
 			if (!pal_img_n) {
 				s->img_n = (color & 2 ? 3 : 1) + (color & 4 ? 1 : 0);
@@ -4997,7 +4980,6 @@ static int stbi__bmp_test(stbi__context *s)
 	return r;
 }
 
-
 // returns 0..31 for the highest set bit
 static int stbi__high_bit(unsigned int z)
 {
@@ -5132,7 +5114,6 @@ static void *stbi__bmp_parse_header(stbi__context *s, stbi__bmp_data *info)
 	}
 	return (void *)1;
 }
-
 
 static void *stbi__bmp_load(stbi__context *s, int *x, int *y, int *comp, int req_comp, stbi__result_info *ri)
 {
@@ -5803,7 +5784,6 @@ static void *stbi__psd_load(stbi__context *s, int *x, int *y, int *comp, int req
 				}
 			}
 		}
-
 	}
 	else {
 		// We're at the raw image data.  It's each channel in order (Red, Green, Blue, Alpha, ...)
@@ -5905,7 +5885,7 @@ static void *stbi__psd_load(stbi__context *s, int *x, int *y, int *comp, int req
 static int stbi__pic_is4(stbi__context *s, const char *str)
 {
 	int i;
-	for (i = 0; i<4; ++i)
+	for (i = 0; i < 4; ++i)
 		if (stbi__get8(s) != (stbi_uc)str[i])
 			return 0;
 
@@ -5919,7 +5899,7 @@ static int stbi__pic_test_core(stbi__context *s)
 	if (!stbi__pic_is4(s, "\x53\x80\xF6\x34"))
 		return 0;
 
-	for (i = 0; i<84; ++i)
+	for (i = 0; i < 84; ++i)
 		stbi__get8(s);
 
 	if (!stbi__pic_is4(s, "PICT"))
@@ -5937,7 +5917,7 @@ static stbi_uc *stbi__readval(stbi__context *s, int channel, stbi_uc *dest)
 {
 	int mask = 0x80, i;
 
-	for (i = 0; i<4; ++i, mask >>= 1) {
+	for (i = 0; i < 4; ++i, mask >>= 1) {
 		if (channel & mask) {
 			if (stbi__at_eof(s)) return stbi__errpuc("bad file", "PIC file too short");
 			dest[i] = stbi__get8(s);
@@ -5951,7 +5931,7 @@ static void stbi__copyval(int channel, stbi_uc *dest, const stbi_uc *src)
 {
 	int mask = 0x80, i;
 
-	for (i = 0; i<4; ++i, mask >>= 1)
+	for (i = 0; i < 4; ++i, mask >>= 1)
 		if (channel&mask)
 			dest[i] = src[i];
 }
@@ -5984,7 +5964,7 @@ static stbi_uc *stbi__pic_load_core(stbi__context *s, int width, int height, int
 
 	*comp = (act_comp & 0x10 ? 4 : 3); // has alpha channel?
 
-	for (y = 0; y<height; ++y) {
+	for (y = 0; y < height; ++y) {
 		int packet_idx;
 
 		for (packet_idx = 0; packet_idx < num_packets; ++packet_idx) {
@@ -5998,7 +5978,7 @@ static stbi_uc *stbi__pic_load_core(stbi__context *s, int width, int height, int
 			case 0: {//uncompressed
 				int x;
 
-				for (x = 0; x<width; ++x, dest += 4)
+				for (x = 0; x < width; ++x, dest += 4)
 					if (!stbi__readval(s, packet->channel, dest))
 						return 0;
 				break;
@@ -6008,7 +5988,7 @@ static stbi_uc *stbi__pic_load_core(stbi__context *s, int width, int height, int
 			{
 				int left = width, i;
 
-				while (left>0) {
+				while (left > 0) {
 					stbi_uc count, value[4];
 
 					count = stbi__get8(s);
@@ -6019,7 +5999,7 @@ static stbi_uc *stbi__pic_load_core(stbi__context *s, int width, int height, int
 
 					if (!stbi__readval(s, packet->channel, value))  return 0;
 
-					for (i = 0; i<count; ++i, dest += 4)
+					for (i = 0; i < count; ++i, dest += 4)
 						stbi__copyval(packet->channel, dest, value);
 					left -= count;
 				}
@@ -6028,7 +6008,7 @@ static stbi_uc *stbi__pic_load_core(stbi__context *s, int width, int height, int
 
 			case 2: {//Mixed RLE
 				int left = width;
-				while (left>0) {
+				while (left > 0) {
 					int count = stbi__get8(s), i;
 					if (stbi__at_eof(s))  return stbi__errpuc("bad file", "file too short (mixed read count)");
 
@@ -6045,14 +6025,14 @@ static stbi_uc *stbi__pic_load_core(stbi__context *s, int width, int height, int
 						if (!stbi__readval(s, packet->channel, value))
 							return 0;
 
-						for (i = 0; i<count; ++i, dest += 4)
+						for (i = 0; i < count; ++i, dest += 4)
 							stbi__copyval(packet->channel, dest, value);
 					}
 					else { // Raw
 						++count;
-						if (count>left) return stbi__errpuc("bad file", "scanline overrun");
+						if (count > left) return stbi__errpuc("bad file", "scanline overrun");
 
-						for (i = 0; i<count; ++i, dest += 4)
+						for (i = 0; i < count; ++i, dest += 4)
 							if (!stbi__readval(s, packet->channel, dest))
 								return 0;
 					}
@@ -6075,7 +6055,7 @@ static void *stbi__pic_load(stbi__context *s, int *px, int *py, int *comp, int r
 
 	if (!comp) comp = &internal_comp;
 
-	for (i = 0; i<92; ++i)
+	for (i = 0; i < 92; ++i)
 		stbi__get8(s);
 
 	x = stbi__get16be(s);
@@ -7241,7 +7221,6 @@ on 'test' only check type, not whether we support this variant
 0.50  (2006-11-19)
 first released version
 */
-
 
 /*
 ------------------------------------------------------------------------------

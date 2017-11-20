@@ -68,7 +68,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
-    <ClCompile Include="image_include.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="shader_s.cpp" />
   </ItemGroup>

@@ -1,7 +1,5 @@
 #include "shader_s.h"
 
-
-
 Shader::Shader(const char* vertexPath, const char* fragmentPath)
 {
 	// 1. 从文件路径中获取顶点/片段着色器
@@ -64,7 +62,6 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 }
-
 
 Shader::~Shader()
 {
