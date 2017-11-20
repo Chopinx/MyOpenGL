@@ -14,6 +14,7 @@
     <ProjectGuid>{E4274260-D717-4454-B473-622BA73FBEAB}</ProjectGuid>
     <RootNamespace>MyOpenGL</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <ProjectName>Secret</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -68,7 +69,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="glad.c" />
-    <ClCompile Include="image_include.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="shader_s.cpp" />
   </ItemGroup>
